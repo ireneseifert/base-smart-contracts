@@ -13,7 +13,7 @@ contract HourlyLottery {
 
     function draw() external {
         require(block.timestamp >= lastTime + INTERVAL, "Too early");
-        uint256 idx = uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty, players.length))) % players.length;
+        uint256 idx = uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, players.length))) % players.length;
         payable(players[idx]).transfer(address(this).balance);
         delete players;
         lastTime = block.timestamp;
